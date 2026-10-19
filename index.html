@@ -98,11 +98,28 @@
     transition: background .2s, color .2s, box-shadow .2s; }
   .btn:hover { background: var(--cyan); color: #02060a; box-shadow: 0 0 28px rgba(111,195,223,.8); }
   .hero .btn { animation: fadeUp .8s ease 1.9s both; }
-  .hero-actions { display: flex; flex-wrap: wrap; gap: 14px; margin-top: 26px; }
-  .hero-actions .btn { margin-top: 0; }
-  .btn.alt { --glow: 0 0 14px rgba(223,116,12,.45); border-color: var(--orange); background: rgba(223,116,12,.12); }
-  .btn.alt:hover { background: var(--orange); color: #02060a; box-shadow: 0 0 28px rgba(223,116,12,.8); }
-  .btn.alt svg { width: 14px; height: 14px; fill: none; stroke: currentColor; stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; }
+
+  /* ---------- SharePoint + One Pager / Video links ---------- */
+  .cta-row { display: flex; flex-wrap: wrap; gap: 14px; margin-top: 26px; }
+  .cta-row .btn { margin-top: 0; }
+  .btn.alt { border-color: var(--orange-hi); background: rgba(223,116,12,.14);
+    box-shadow: 0 0 14px rgba(223,116,12,.45), inset 0 0 18px rgba(223,116,12,.15); }
+  .btn.alt:hover { background: var(--orange-hi); color: #02060a; box-shadow: 0 0 28px rgba(255,143,46,.8); }
+  .btn.off, .btn.off:hover { filter: grayscale(.8) brightness(.7); cursor: not-allowed;
+    background: rgba(223,116,12,.14); color: var(--ice); box-shadow: none; }
+
+  .actions { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 14px; }
+  .actions .play { margin-top: 0; }
+  .lnk { display: inline-flex; align-items: center; gap: 8px; padding: 9px 12px; text-decoration: none; cursor: pointer;
+    font: 700 12.5px/1 var(--display); color: var(--ice); background: rgba(223,116,12,.08); border: 1px solid var(--orange-hi);
+    transition: background .2s, color .2s, box-shadow .2s; }
+  .lnk svg { width: 14px; height: 14px; fill: none; stroke: currentColor; stroke-width: 1.6; stroke-linecap: round; stroke-linejoin: round; }
+  a.lnk:hover { background: var(--orange-hi); color: #02060a; box-shadow: 0 0 18px rgba(255,143,46,.55); }
+  .lnk.off { opacity: .4; border-color: var(--line); color: var(--muted); background: none; cursor: not-allowed; }
+  .cine-links { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 16px;
+    animation: fadeUp calc(.7s * var(--s)) ease calc(3.1s * var(--s)) both; }
+  .cine-links .lnk { padding: 11px 16px; background: rgba(3,6,10,.7); }
+  .cine.skipped .cine-links { animation-duration: .001s !important; animation-delay: 0s !important; }
 
   /* ---------- Tabs ---------- */
   nav.tabs { position: sticky; top: 0; z-index: 20; background: rgba(3,6,10,.84); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); border-bottom: 1px solid var(--line); }
@@ -401,10 +418,9 @@
       <div class="rail" aria-hidden="true"><i class="rail-line rv"></i><svg class="cycle rider"><use href="#cycle"/></svg></div>
     </div>
     <p class="lede">Meet the teams and their AI agents. Pick your top 3 and watch the race unfold live.</p>
-    <div class="hero-actions">
+    <div class="cta-row">
       <a class="btn" href="#view-vote" id="ctaVote">Start voting</a>
-      <a class="btn alt" id="ctaSite" href="https://volkswagengroup.sharepoint.com/sites/PurchasingAICommunity/SitePages/WelcomeToTheGrid.aspx" target="_blank" rel="noopener noreferrer">Visit The Grid site
-        <svg viewBox="0 0 16 16" aria-hidden="true"><path d="M6 3H3v10h10v-3M9 2h5v5M14 2L7 9"/></svg></a>
+      <a class="btn alt" id="ctaSharepoint" href="#" target="_blank" rel="noopener noreferrer">Open SharePoint ↗</a>
     </div>
   </div>
 </header>
@@ -609,6 +625,66 @@ const configured = !String(FIREBASE_CONFIG.apiKey).startsWith("PEGA") && !String
 
 function safeGet(k) { try { return localStorage.getItem(k); } catch { return null; } }
 function safeSet(k, v) { try { localStorage.setItem(k, v); } catch { /* storage unavailable */ } }
+
+/* =====================================================================
+   LINKS: SHAREPOINT, ONE PAGER AND VIDEO
+   Paste full https:// links. Anything left as "" shows as disabled.
+   ===================================================================== */
+const SHAREPOINT_URL = "https://volkswagengroup.sharepoint.com/sites/PurchasingAICommunity/SitePages/WelcomeToTheGrid.aspx"; // e.g. "https://<tenant>.sharepoint.com/sites/TheGrid"
+
+const TEAM_LINKS = {
+  t02: { onePager: "https://volkswagengroup.sharepoint.com/:p:/r/sites/PurchasingAICommunity/Shared%20Documents/01.%20%F0%9F%93%A2%20News/The%20Grid%202026/BN%20Industries/TheGrid_OnePager_BN%20Industries.pptx?d=wb307fde488ef469caa092fd7860d793e&csf=1&web=1&e=7luWYK", video: "" },  // BN Industries
+  t03: { onePager: "https://volkswagengroup.sharepoint.com/:p:/r/sites/PurchasingAICommunity/Shared%20Documents/01.%20%F0%9F%93%A2%20News/The%20Grid%202026/BM1/TheGrid_OnePager_BM1.pptx?d=wcf6f11965cd54aa9bcde9c6f314c0b19&csf=1&web=1&e=T5ktwV", video: "" },  // BM1
+  t04: { onePager: "https://volkswagengroup.sharepoint.com/:p:/r/sites/PurchasingAICommunity/Shared%20Documents/01.%20%F0%9F%93%A2%20News/The%20Grid%202026/KTM%20Milestone%20Watch/TheGrid_OnePager_final%201.pptx?d=w40fa340a01004458822226ec3f329736&csf=1&web=1&e=Qwbs06", video: "" },  // KTM Milestone Watch
+  t05: { onePager: "https://volkswagengroup.sharepoint.com/:p:/r/sites/PurchasingAICommunity/Shared%20Documents/01.%20%F0%9F%93%A2%20News/The%20Grid%202026/BSM%20-%20Electrico/TheGrid_OnePager.pptx?d=wfebffb95f6e14b15a75e92b294b999c6&csf=1&web=1&e=cCsWGl", video: "" },  // BSM - Electric
+  t06: { onePager: "https://volkswagengroup.sharepoint.com/:p:/r/sites/PurchasingAICommunity/Shared%20Documents/01.%20%F0%9F%93%A2%20News/The%20Grid%202026/Tariffs%20Cockpit/TheGrid_OnePager_Tariffs%20cockpit.pptx?d=w09900f8a240d4c3e8587d56fa6c0254a&csf=1&web=1&e=dxa0bP", video: "" },  // Tariffs cockpit
+  t07: { onePager: "https://volkswagengroup.sharepoint.com/:p:/r/sites/PurchasingAICommunity/Shared%20Documents/01.%20%F0%9F%93%A2%20News/The%20Grid%202026/PKO%20Value%20Drivers/TheGrid_OnePager_PKO%20Value%20Drivers.pptx?d=wb1ba612e780f4cfbb0baf76f7f6ac680&csf=1&web=1&e=xlRjql", video: "" },  // PKO Value Drivers
+  t08: { onePager: "https://volkswagengroup.sharepoint.com/:p:/r/sites/PurchasingAICommunity/Shared%20Documents/01.%20%F0%9F%93%A2%20News/The%20Grid%202026/PredictIA%20General%20Purchasing%20Innovation%20Team/TheGrid_OnePager_PredictIA%20General%20Purchasing%20Innovation%20Team.pptx?d=w85c3389b823747a7b07062983cf09ce2&csf=1&web=1&e=NVGS5l", video: "" },  // PredictIA: General Purchasing Innovat...
+  t09: { onePager: "https://volkswagengroup.sharepoint.com/:p:/r/sites/PurchasingAICommunity/Shared%20Documents/01.%20%F0%9F%93%A2%20News/The%20Grid%202026/BP%20Team/TheGrid_OnePager_BP%20team.pptx?d=wedfd2b30256944269599ba650f701d50&csf=1&web=1&e=Cc5Jwn", video: "" },  // BP team
+  t10: { onePager: "https://volkswagengroup.sharepoint.com/:p:/r/sites/PurchasingAICommunity/Shared%20Documents/01.%20%F0%9F%93%A2%20News/The%20Grid%202026/Strategic%20Sourcing%20Intelligence%20Team/TheGrid_OnePager_Strategic%20Sourcing%20Intelligence.pptx?d=w936fed576efd4ee8b59a0afee0dfe296&csf=1&web=1&e=Qz8dOL", video: "" },  // Strategic Sourcing Intelligence Team
+  t11: { onePager: "https://volkswagengroup.sharepoint.com/:p:/r/sites/PurchasingAICommunity/Shared%20Documents/01.%20%F0%9F%93%A2%20News/The%20Grid%202026/Steel%20Value%20Engineering%20Team/TheGrid_OnePager_Steel%20Value%20Engineering%20Team.pptx?d=w404f64a4778d4352a3ab0f0cd7c33fc8&csf=1&web=1&e=C4miBS", video: "" },  // Steel Price Comparison
+  t12: { onePager: "https://volkswagengroup.sharepoint.com/:p:/r/sites/PurchasingAICommunity/Shared%20Documents/01.%20%F0%9F%93%A2%20News/The%20Grid%202026/Spongebob,%20we%20have%20the%20technology/TheGrid_OnePager_Artificially%20Intelligent%20-%20Spongebob,%20we%20have%20the%20technology.pptx?d=we04876537b084e2f99df799cccd377e6&csf=1&web=1&e=10c6z7", video: "" },  // Artificially Intelligent - Spongebob,...
+  t13: { onePager: "https://volkswagengroup.sharepoint.com/:p:/r/sites/PurchasingAICommunity/Shared%20Documents/01.%20%F0%9F%93%A2%20News/The%20Grid%202026/Purchaysing%20Is%20In%20the%20Line/TheGrid_OnePager_Purchaysing%20Is%20In%20the%20Line.pptx?d=wd5fc928a96184a2b8a2565052818f0e8&csf=1&web=1&e=FCO1Md", video: "" },  // Purchaysing Is In the Line
+  t14: { onePager: "https://volkswagengroup.sharepoint.com/:p:/r/sites/PurchasingAICommunity/Shared%20Documents/01.%20%F0%9F%93%A2%20News/The%20Grid%202026/The%20Connectivity%20Prompt%20Squad/AI%20one%20pager%20T%26%20C%20comparison%20(1).pptx?d=wf2cade8b0d374b31991c4a85e1802724&csf=1&web=1&e=cYOPWg", video: "" },  // The Connectivity Prompt Squad
+  t15: { onePager: "https://volkswagengroup.sharepoint.com/:b:/r/sites/PurchasingAICommunity/Shared%20Documents/01.%20%F0%9F%93%A2%20News/The%20Grid%202026/RIIZE/Agentic%20AI%20Presentation_RIIZE_10162026_final.pdf?d=w90397b3399da45e3b5dfcad1831505ee&csf=1&web=1&e=amTolN", video: "" },  // RIIZE
+  t17: { onePager: "https://volkswagengroup.sharepoint.com/:p:/r/sites/PurchasingAICommunity/Shared%20Documents/01.%20%F0%9F%93%A2%20News/The%20Grid%202026/Ctrl%20+%20Alt%20+%20Procure/TheGrid_OnePager.pptx?d=w131110f2bebd44f385d980b9aeb299ce&csf=1&web=1&e=XvdrHz", video: "" },  // Ctrl + Alt + Procure
+  t18: { onePager: "https://volkswagengroup.sharepoint.com/:p:/r/sites/PurchasingAICommunity/Shared%20Documents/01.%20%F0%9F%93%A2%20News/The%20Grid%202026/BN/TheGrid_OnePager_BN.pptx?d=w83e794bf3672479c8e7a0b1139c85f41&csf=1&web=1&e=nhMZjs", video: "" },  // BN
+  t19: { onePager: "https://volkswagengroup.sharepoint.com/:p:/r/sites/PurchasingAICommunity/Shared%20Documents/01.%20%F0%9F%93%A2%20News/The%20Grid%202026/BN%20Learning/TheGrid_OnePager_BN%20Learning.pptx?d=wd010e27894d1478fb70e23d0e1b00e9b&csf=1&web=1&e=6u5qsz", video: "" },  // BN Learning
+  t20: { onePager: "https://volkswagengroup.sharepoint.com/:p:/r/sites/PurchasingAICommunity/Shared%20Documents/01.%20%F0%9F%93%A2%20News/The%20Grid%202026/Value%20Engineering%20MX/TheGrid_OnePager_Value%20Engineering%20Mx.pptx?d=w0af48e0c04c04d23963be3274f021598&csf=1&web=1&e=GkXeQ9", video: "" },  // Value Engineering Mx
+  t21: { onePager: "https://volkswagengroup.sharepoint.com/:p:/r/sites/PurchasingAICommunity/Shared%20Documents/01.%20%F0%9F%93%A2%20News/The%20Grid%202026/Singularity/TheGrid_OnePager%20Singularity.pptx?d=wddb412e67fa14c678a4e0e3432bb7b39&csf=1&web=1&e=a4EdW1", video: "" },  // Singularity
+  t22: { onePager: "https://volkswagengroup.sharepoint.com/:p:/r/sites/PurchasingAICommunity/Shared%20Documents/01.%20%F0%9F%93%A2%20News/The%20Grid%202026/ConsolidAI/TheGrid%20presentaci%C3%B3n_OnePager.pptx?d=wa9dcf2926f6c4f458afa45989041fa2c&csf=1&web=1&e=lAdjCO", video: "" },  // ConsolidAI
+  t24: { onePager: "https://volkswagengroup.sharepoint.com/:p:/r/sites/PurchasingAICommunity/Shared%20Documents/01.%20%F0%9F%93%A2%20News/The%20Grid%202026/Chattanooga%20Value%20Engineering/Meeting_Action_Reminder_Agent_10_Minute_Presentation%202.pptx?d=wfc9e28aa03cc43ce8b4fe040e504f967&csf=1&web=1&e=KuBaqc", video: "" },  // Chattanooga Value Engineering
+  t25: { onePager: "https://volkswagengroup.sharepoint.com/:p:/r/sites/PurchasingAICommunity/Shared%20Documents/01.%20%F0%9F%93%A2%20News/The%20Grid%202026/KTM%20Powertrain/TheGrid_OnePager%20KTM%20Project%20Manager%20II.pptx?d=wa5b8e4327750459ba43e01fad5c54995&csf=1&web=1&e=SeICIQ", video: "" },  // KTM Powertrain
+  t26: { onePager: "", video: "" }  // Buylinguo
+};
+
+// Only https links are accepted
+function safeUrl(u) {
+  try { const x = new URL(String(u || "").trim()); return x.protocol === "https:" ? x.href : ""; } catch { return ""; }
+}
+const ICON_DOC = '<svg viewBox="0 0 16 16" aria-hidden="true"><path d="M4 1.5h5.5L13 5v9.5H4z"/><path d="M9.5 1.5V5H13M6 8.5h5M6 11h5"/></svg>';
+const ICON_VID = '<svg viewBox="0 0 16 16" aria-hidden="true"><rect x="1.5" y="3" width="13" height="10" rx="1.5"/><path d="M6.5 6l3.5 2-3.5 2z"/></svg>';
+
+function linkBtn(url, label, icon, team) {
+  const u = safeUrl(url);
+  return u
+    ? `<a class="lnk" href="${esc(u)}" target="_blank" rel="noopener noreferrer" aria-label="${label} for ${esc(team)} (opens in a new tab)">${icon}${label}</a>`
+    : `<span class="lnk off" aria-disabled="true" title="Link coming soon">${icon}${label}</span>`;
+}
+function teamLinks(t) {
+  const l = TEAM_LINKS[t.id] || {};
+  return linkBtn(l.onePager, "One Pager", ICON_DOC, t.team) + linkBtn(l.video, "Video", ICON_VID, t.team);
+}
+
+// Hero button -> SharePoint site
+(function () {
+  const a = $("#ctaSharepoint"); if (!a) return;
+  const u = safeUrl(SHAREPOINT_URL);
+  if (u) { a.href = u; return; }
+  a.classList.add("off"); a.setAttribute("aria-disabled", "true"); a.title = "Link coming soon"; a.removeAttribute("target");
+  a.addEventListener("click", (e) => e.preventDefault());
+})();
+
 
 // Splits "user@domain". Returns null unless there is exactly one @.
 function splitEmail(email) {
@@ -874,9 +950,12 @@ function renderTeams() {
         <h3>${esc(t.team)}</h3>
       </div>
       ${t.agents.map(agentHtml).join("")}
-      <button type="button" class="play" data-play aria-label="View cinematic for ${esc(t.team)}">
-        <svg viewBox="0 0 12 12" aria-hidden="true"><path d="M2 1l9 5-9 5z"/></svg>View cinematic
-      </button>
+      <div class="actions">
+        <button type="button" class="play" data-play aria-label="View cinematic for ${esc(t.team)}">
+          <svg viewBox="0 0 12 12" aria-hidden="true"><path d="M2 1l9 5-9 5z"/></svg>View cinematic
+        </button>
+        ${teamLinks(t)}
+      </div>
       <div class="rank" role="group" aria-label="Place for ${esc(t.team)}">
         <span>My place</span>
         ${ORD.map((o, i) => `<button type="button" data-rank="${i}" aria-pressed="false" aria-label="${o} place for ${esc(t.team)}">${o}</button>`).join("")}
@@ -966,6 +1045,7 @@ function bodyHtml(t) {
         <div class="rail" aria-hidden="true"><i class="rail-line rv"></i><svg class="cycle rider"><use href="#cycle"/></svg></div>
       </div>
       <div class="agents">${agents}</div>
+      <div class="cine-links">${teamLinks(t)}</div>
     </div>
     <div class="cine-disc" aria-hidden="true">${discSVG(t.id)}</div>`;
 }
