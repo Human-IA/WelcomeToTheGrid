@@ -107,7 +107,10 @@
   .tab:hover { color: var(--ice); }
   .tab[aria-selected="true"] { color: var(--ice); border-bottom-color: var(--cyan); box-shadow: 0 10px 18px -12px var(--cyan); }
 
-  main { padding: 34px 0 190px; }
+  /* .wrap (más específico) pisaba el padding de main y la barra fija tapaba la última tarjeta.
+     --bar-h la mide el JS (alto real de la barra de envío; 0 si está oculta). */
+  main.wrap { padding-top: 34px; padding-bottom: calc(var(--bar-h, 140px) + 40px + env(safe-area-inset-bottom, 0px)); }
+  html { scroll-padding-bottom: calc(var(--bar-h, 140px) + 24px); }
   h2 { margin: 0 0 6px; font: 800 clamp(22px, 3.4vw, 32px)/1.15 var(--display); color: var(--ice); text-shadow: 0 0 14px rgba(111,195,223,.45); }
   .sub { margin: 0 0 20px; color: var(--muted); font-size: 18px; max-width: 70ch; }
 
@@ -537,8 +540,6 @@ const ALLOWED_DOMAIN = "@vw.com.mx";
    EQUIPOS Y AGENTES (fuente: Asignacion_Equipos_The_Grid.xlsx)
    ===================================================================== */
 const TEAMS = [
-  { id: "t01", team: "Nearshoring 1969", agents: [
-    { name: "", desc: "Aplicar check list para evaluar desempeño de proveedor crítico en base a KPI´s relacionados que impidan el maquillaje de evidencias." }]},
   { id: "t02", team: "BN Industries", agents: [
     { name: "Steering Assistant for Fast Excecution (SAFE)", desc: "An automatic tracking tool for the implementation and lifetime of new projects." }]},
   { id: "t03", team: "BM1", agents: [
@@ -552,13 +553,14 @@ const TEAMS = [
   { id: "t07", team: "PKO Value Drivers", agents: [
     { name: "PKO ORION", desc: "Develop an intelligent agent capable of consolidating user-provided information into a centralized knowledge base that can be used to generate Yellow Sheets and Blue Sheets. The agent should also be able to interpret and analyze existing Yellow and Blue Sheets, extract key data, and identify impacted part numbers (NPs), supporting efficient evaluation and decision-making processes." }]},
   { id: "t08", team: "PredictIA: General Purchasing Innovation Team", agents: [
-    { name: "PredictIA", desc: "PredictIA es un agente inteligente diseñado para Compras Generales que analiza históricos de Órdenes de Compra, proveedores, categorías, áreas solicitantes y montos para predecir futuras necesidades de adquisición, identificar patrones recurrentes y anticipar la demanda. A través de modelos predictivos permite detectar oportunidades de consolidación, optimizar estrategias de sourcing y fortalecer las negociaciones con proveedores mediante una mejor visibilidad de volúmenes futuros esperados. Su objetivo es transformar la gestión de compras de un enfoque reactivo a uno predictivo y estratégico, impulsando ahorros, eficiencia operativa y generación de valor para el negocio." },
+    { name: "PredictIA", desc: "PredictIA es un agente inteligente diseñado para Compras Generales que analiza históricos de Órdenes de Compra, proveedores, categorías, áreas solicitantes y montos para predecir futuras necesidades de adquisición, identificar patrones recurrentes y anticipar la demanda. A través de modelos predictivos permite detectar oportunidades de consolidación, optimizar estrategias de sourcing y fortalecer las negociaciones con proveedores mediante una mejor visibilidad de volúmenes futuros esperados. Su objetivo es transformar la gestión de compras de un enfoque reactivo a uno predictivo y estratégico, impulsando ahorros, eficiencia operativa y generación de valor para el negocio." }]},
+  { id: "t26", team: "Buylinguo", agents: [
     { name: "Buylinguo", desc: "" }]},
-  { id: "t09", team: "BP team", agents: [
+{ id: "t09", team: "BP team", agents: [
     { name: "BP AI", desc: "Develop a streamlined and efficient tracking tool to enable monitoring and timely coordination of Business Plan activities, accountability, and cross-functional alignment." }]},
   { id: "t10", team: "Strategic Sourcing Intelligence Team", agents: [
     { name: "QuoteIQ", desc: "The agent will automatically analyze and standardize quotations from various suppliers and formats, accelerating AEKO and sourcing evaluations. This will streamline the quotation review process and allow buyers to dedicate more time to supplier negotiations and strategic purchasing activities." }]},
-  { id: "t11", team: "Steel Value Engineering Team", agents: [
+  { id: "t11", team: "Steel Price Comparison", agents: [
     { name: "SteelWise", desc: "Desarrollar un agente de análisis de acero que utilice la información contenida en las hojas amarillas para identificar oportunidades de optimización y ahorro.\n\nEl agente consolidará los grados de acero, especificaciones y requisitos técnicos utilizados por los diferentes proveedores, generando una matriz comparativa que permita identificar materiales comunes entre piezas, plataformas y proveedores.\n\nA partir de esta información, el agente podrá:\n- Comparar los grados de acero utilizados por diferentes proveedores.\n- Mostrar el precio pagado por cada proveedor para materiales similares.\n- Generar promedios y referencias de costo por tipo de acero.\n- Detectar oportunidades de estandarización y consolidación de volúmenes.\n- Identificar diferencias de costo para materiales equivalentes.\n- Comparar la información interna con tendencias de mercado obtenidas de plataformas como Marketlines.\n- Incorporar información de otras regiones, como Alemania, para realizar benchmarks globales y evaluar oportunidades de suministro con molinos alternativos, incluyendo molinos chinos.\n\nEl objetivo final es crear una base de conocimiento que permita tomar decisiones de compra más informadas, aprovechar economías de escala, identificar oportunidades de ahorro y fortalecer la estrategia de abastecimiento de acero a nivel global." }]},
   { id: "t12", team: "Artificially Intelligent - Spongebob, we have the technology.", agents: [
     { name: "Alex Bot", desc: "Negotiation & Presentation Builder" }]},
@@ -568,8 +570,6 @@ const TEAMS = [
     { name: "The Connectivity Prompt Squad", desc: "Automate the tracking reporting of various tasks from different departments and emails" }]},
   { id: "t15", team: "RIIZE", agents: [
     { name: "Wizard of Capacity", desc: "AI extracts capacity, lead time, and constraints from the raw data/audit results\nStandard report generated in minutes, with flagged risks" }]},
-  { id: "t16", team: "DUNS & Dragons", agents: [
-    { name: "Supplier Compliance Checker", desc: "The Supplier Compliance Checker allows a buyer to upload a screenshot of suppliers directly from a GLOBE sourcing event. The tool then identifies the suppliers and automatically performs a series of compliance and qualification checks, including S-rating relevance, S-rating status, financial rating, and general contractor license in all 50 US states. This will consolidate supplier qualification info into one view, reducing time, complexity and clicks for buyers." }]},
   { id: "t17", team: "Ctrl + Alt + Procure", agents: [
     { name: "NAR BP Navigator", desc: "Help General Purchasing users anticipate upcoming VW NAR BP processes to improve collaboration, guide discussions with management, and generally stay informed. Automate / schedule push notifications and digest reports.\n\nUses SharePoint Business Plan & Phone Book (Misc.) sources to identify upcoming processes owned by the user and related topics." }]},
   { id: "t18", team: "BN", agents: [
@@ -582,8 +582,6 @@ const TEAMS = [
     { name: "Quote Autopsy Agent", desc: "Quote Autopsy Agent leverages AI to perform an in-depth commercial assessment of supplier quotations, identifying optimization opportunities, cost improvement levers, hidden commercial impacts, negotiation points and sourcing risks before supplier selection. The solution transforms complex quotation reviews into actionable intelligence, enabling faster and better-informed procurement decisions." }]},
   { id: "t22", team: "ConsolidAI", agents: [
     { name: "Strategic Supplier Consolidation", desc: "Strategic Supplier Consolidation is an AI-powered agent designed to identify supplier consolidation opportunities across commodities, regions, and business units. By analyzing sourcing and supplier data, it provides actionable recommendations to reduce supplier complexity, leverage purchasing power, optimize costs, and support strategic procurement decisions." }]},
-  { id: "t23", team: "Soporte IA", agents: [
-    { name: "Soporte a usuarios con IA", desc: "Implementar un agente con IA para dar soporte por celular a los usuarios de compras sobre temas de sistemas o procesos. El agente tendría 2 variantes: soporte por celular y soporte por WhatsApp." }]},
   { id: "t24", team: "Chattanooga Value Engineering", agents: [
     { name: "Meeting Task Reminder", desc: "Help users choose a meeting from their accessible calendar or recent meeting history, then convert that meeting’s discussion into actionable reminder drafts. Identify agreed tasks, owners, due dates, context, and next steps from the selected meeting, then prioritize the user’s own responsibilities and produce clear, review-ready follow-up emails the user can approve, copy, and send." }]},
   { id: "t25", team: "KTM Powertrain", agents: [
@@ -1221,6 +1219,16 @@ renderResults([], true);
 
   const prev = safeGet("grid_voted");
   if (prev) { try { showThanks(JSON.parse(prev).picks); } catch { /* ignorar */ } }
+})();
+// Mantiene libre el espacio inferior: la barra fija nunca debe tapar la última tarjeta.
+(function () {
+  const bar = document.getElementById("submitbar");
+  if (!bar) return;
+  const setH = () => document.documentElement.style.setProperty("--bar-h", (bar.hidden ? 0 : bar.offsetHeight) + "px");
+  if ("ResizeObserver" in window) new ResizeObserver(setH).observe(bar);
+  new MutationObserver(setH).observe(bar, { attributes: true, attributeFilter: ["hidden"] });
+  window.addEventListener("resize", setH);
+  setH();
 })();
 </script>
 </body>
