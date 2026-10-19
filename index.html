@@ -1,18 +1,18 @@
 <!DOCTYPE html>
-<html lang="es">
+<html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <meta name="theme-color" content="#03060a">
-<title>The Grid · Vota por tu top 3</title>
+<title>The Grid · Vote for your top 3</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700;800;900&family=Rajdhani:wght@500;600;700&display=swap" rel="stylesheet">
 <style>
   /* =====================================================================
      PALETA (Tron: Legacy)
-     cyan #6FC3DF · naranja #DF740C · dorado #FFE64D · hielo #E6FFFF · panel #0C141F
-     Podio: 1° dorado · 2° hielo · 3° naranja
+     cyan #6FC3DF · orange #DF740C · gold #FFE64D · ice #E6FFFF · panel #0C141F
+     Podium: 1st gold · 2nd ice · 3rd orange
      ===================================================================== */
   :root {
     --void: #03060a;
@@ -39,7 +39,7 @@
   html { background: var(--void); scroll-behavior: smooth; }
   html.lock { overflow: hidden; }
   body { margin: 0; color: var(--text); font: 500 18px/1.4 var(--body); min-height: 100vh; }
-  body::before { /* rejilla fija de fondo */
+  body::before { /* fixed background grid */
     content: ""; position: fixed; inset: 0; z-index: -1; pointer-events: none;
     background:
       linear-gradient(rgba(111,195,223,.045) 1px, transparent 1px) 0 0 / 48px 48px,
@@ -51,10 +51,10 @@
   .sr-only { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
   .wrap { max-width: 1120px; margin: 0 auto; padding: 0 20px; }
 
-  /* ---------- Moto (símbolo compartido) ---------- */
+  /* ---------- Light cycle (shared symbol) ---------- */
   .cycle { width: 72px; height: 29px; color: var(--cyan); filter: drop-shadow(0 0 5px currentColor); overflow: visible; display: block; }
 
-  /* ---------- Movimiento compartido: la moto dibuja lo que revela ---------- */
+  /* ---------- Shared motion: the light cycle draws what it reveals ---------- */
   @keyframes revealA {
     0% { clip-path: inset(-80px 100% -80px -80px); }
     80%, 100% { clip-path: inset(-80px -80px -80px -80px); }
@@ -99,7 +99,7 @@
   .btn:hover { background: var(--cyan); color: #02060a; box-shadow: 0 0 28px rgba(111,195,223,.8); }
   .hero .btn { animation: fadeUp .8s ease 1.9s both; }
 
-  /* ---------- Pestañas ---------- */
+  /* ---------- Tabs ---------- */
   nav.tabs { position: sticky; top: 0; z-index: 20; background: rgba(3,6,10,.84); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); border-bottom: 1px solid var(--line); }
   nav.tabs .wrap { display: flex; gap: 4px; }
   .tab { appearance: none; background: none; border: 0; cursor: pointer; padding: 16px 20px 14px; color: var(--muted);
@@ -107,8 +107,8 @@
   .tab:hover { color: var(--ice); }
   .tab[aria-selected="true"] { color: var(--ice); border-bottom-color: var(--cyan); box-shadow: 0 10px 18px -12px var(--cyan); }
 
-  /* .wrap (más específico) pisaba el padding de main y la barra fija tapaba la última tarjeta.
-     --bar-h la mide el JS (alto real de la barra de envío; 0 si está oculta). */
+  /* .wrap (more specific) was overriding main's padding and the fixed bar covered the last card.
+     --bar-h is measured by JS (actual height of the submit bar; 0 if hidden). */
   main.wrap { padding-top: 34px; padding-bottom: calc(var(--bar-h, 140px) + 40px + env(safe-area-inset-bottom, 0px)); }
   html { scroll-padding-bottom: calc(var(--bar-h, 140px) + 24px); }
   h2 { margin: 0 0 6px; font: 800 clamp(22px, 3.4vw, 32px)/1.15 var(--display); color: var(--ice); text-shadow: 0 0 14px rgba(111,195,223,.45); }
@@ -117,7 +117,7 @@
   .banner { background: rgba(223,116,12,.12); border: 1px solid var(--orange); border-left: 6px solid var(--orange); padding: 12px 16px; margin-bottom: 22px; font-size: 17px; }
   .banner code { color: var(--gold); }
 
-  /* ---------- Datos del votante ---------- */
+  /* ---------- Voter details ---------- */
   .who { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; background: rgba(12,20,31,.85); border: 1px solid var(--line); padding: 20px; margin-bottom: 40px; position: relative; }
   .field label { display: block; font-weight: 700; font-size: 16px; margin-bottom: 6px; color: var(--ice); }
   .field input, .search input { width: 100%; padding: 12px 14px; background: rgba(111,195,223,.06); border: 1px solid var(--line); border-radius: 0; font-size: 18px; }
@@ -125,7 +125,7 @@
   .field input:focus, .search input:focus { outline: none; border-color: var(--cyan); box-shadow: 0 0 0 1px var(--cyan), 0 0 18px rgba(111,195,223,.4); }
   .field small { color: var(--muted); font-size: 15px; }
 
-  /* ---------- Lista de equipos ---------- */
+  /* ---------- Team list ---------- */
   .list-head { display: flex; flex-wrap: wrap; align-items: end; justify-content: space-between; gap: 14px; margin-bottom: 18px; }
   .search input { min-width: 260px; }
   .teams { display: grid; grid-template-columns: repeat(auto-fill, minmax(330px, 1fr)); gap: 18px; align-items: start; }
@@ -172,7 +172,7 @@
   .rank button.taken { color: #5f7c8c; }
   .none { padding: 30px; text-align: center; color: var(--muted); background: rgba(12,20,31,.7); border: 1px dashed var(--line); }
 
-  /* ---------- Barra de envío ---------- */
+  /* ---------- Submit bar ---------- */
   .submitbar { position: fixed; left: 0; right: 0; bottom: 0; z-index: 30; padding-bottom: env(safe-area-inset-bottom, 0px);
     background: rgba(3,6,10,.92); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px);
     border-top: 1px solid var(--line-hi); box-shadow: 0 -10px 30px -12px rgba(111,195,223,.45); }
@@ -181,7 +181,7 @@
   .slot { appearance: none; --b: var(--cyan); display: flex; align-items: center; gap: 8px; padding: 5px 12px 5px 5px; max-width: 100%;
     background: rgba(111,195,223,.05); border: 1px solid var(--line); text-align: left; cursor: default; }
   .slot:nth-child(1) { --b: var(--gold); } .slot:nth-child(2) { --b: var(--ice); } .slot:nth-child(3) { --b: var(--orange-hi); }
-  .slot b { display: grid; place-items: center; width: 30px; height: 30px; background: rgba(111,195,223,.15); color: var(--b); font: 800 13px/1 var(--display); }
+  .slot b { display: grid; place-items: center; min-width: 30px; height: 30px; padding: 0 6px; background: rgba(111,195,223,.15); color: var(--b); font: 800 13px/1 var(--display); }
   .slot em { font-style: normal; color: var(--muted); max-width: 22ch; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; font-size: 17px; }
   .slot.on { border-color: var(--b); cursor: pointer; }
   .slot.on b { background: var(--b); color: #02060a; }
@@ -195,18 +195,18 @@
   .status.err { color: var(--orange-hi); }
   .status:empty { display: none; }
 
-  /* ---------- Confirmación ---------- */
+  /* ---------- Confirmation ---------- */
   .thanks { position: relative; background: rgba(12,20,31,.88); border: 1px solid var(--cyan); padding: 28px; box-shadow: 0 0 40px -10px var(--cyan); overflow: hidden; }
   .thanks h2 { font-size: clamp(24px, 4vw, 38px); }
   .mypicks { list-style: none; margin: 18px 0 8px; padding: 0; display: grid; gap: 8px; max-width: 560px; }
   .mypicks li { --b: var(--cyan); display: flex; align-items: center; gap: 12px; padding: 6px 14px 6px 6px; border: 1px solid var(--b); background: rgba(111,195,223,.05); }
   .mypicks li:nth-child(1) { --b: var(--gold); } .mypicks li:nth-child(2) { --b: var(--ice); } .mypicks li:nth-child(3) { --b: var(--orange-hi); }
-  .mypicks b { display: grid; place-items: center; width: 40px; height: 40px; background: var(--b); color: #02060a; font: 800 15px/1 var(--display); }
+  .mypicks b { display: grid; place-items: center; min-width: 40px; height: 40px; padding: 0 8px; background: var(--b); color: #02060a; font: 800 15px/1 var(--display); }
   .mypicks span { font-weight: 700; font-size: 19px; }
   .thanks .btn { margin-top: 18px; }
 
   /* =====================================================================
-     RESULTADOS · CARRERA
+     RESULTS · RACE
      ===================================================================== */
   .scoring { display: flex; flex-wrap: wrap; gap: 8px 10px; margin: 0 0 22px; }
   .pt { --b: var(--gold); display: inline-flex; align-items: center; gap: 8px; padding: 4px 12px 4px 4px; border: 1px solid var(--b); font-size: 16px; }
@@ -271,7 +271,7 @@
   .toast.show { opacity: 1; transform: translate(-50%, 0); }
 
   /* =====================================================================
-     CINEMÁTICA DE EQUIPO
+     TEAM CINEMATIC
      ===================================================================== */
   dialog.cine { --s: 1; position: fixed; inset: 0; width: 100%; height: 100%; max-width: none; max-height: none; margin: 0; padding: 0; border: 0;
     background: var(--void); color: var(--text); overflow: hidden; }
@@ -336,7 +336,7 @@
   .cine.skipped .in, .cine.skipped .rv, .cine.skipped .rider, .cine.skipped .agents, .cine.skipped .cine-actions, .cine.skipped .flash,
   .cine.skipped .desc-body p, .cine.skipped .desc-body li { animation-duration: .001s !important; animation-delay: 0s !important; }
 
-  /* ---------- Adaptación ---------- */
+  /* ---------- Responsive ---------- */
   @media (max-width: 760px) {
     .who { grid-template-columns: 1fr; }
     .teams { grid-template-columns: 1fr; }
@@ -369,7 +369,7 @@
 </head>
 <body>
 
-<!-- Símbolo de la moto de luz (vista lateral, mira a la derecha) -->
+<!-- Light cycle symbol (side view, facing right) -->
 <svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false">
   <defs>
     <symbol id="cycle" viewBox="0 0 100 40">
@@ -390,89 +390,89 @@
 <header class="hero">
   <canvas id="heroCanvas" aria-hidden="true"></canvas>
   <div class="wrap hero-inner">
-    <p class="chip"><span class="live-dot" aria-hidden="true"></span><span id="heroVotes">Sé el primero en votar</span></p>
+    <p class="chip"><span class="live-dot" aria-hidden="true"></span><span id="heroVotes">Be the first to vote</span></p>
     <div class="title-box">
       <h1 class="logo rv">THE GRID</h1>
       <div class="rail" aria-hidden="true"><i class="rail-line rv"></i><svg class="cycle rider"><use href="#cycle"/></svg></div>
     </div>
-    <p class="lede">Conoce a los equipos y sus agentes de IA. Elige tu top 3 y mira cómo avanza la carrera en vivo.</p>
-    <a class="btn" href="#view-vote" id="ctaVote">Empezar a votar</a>
+    <p class="lede">Meet the teams and their AI agents. Pick your top 3 and watch the race unfold live.</p>
+    <a class="btn" href="#view-vote" id="ctaVote">Start voting</a>
   </div>
 </header>
 
-<nav class="tabs" aria-label="Secciones">
+<nav class="tabs" aria-label="Sections">
   <div class="wrap" role="tablist">
-    <button class="tab" role="tab" id="tab-vote" aria-controls="view-vote" aria-selected="true">Votar</button>
+    <button class="tab" role="tab" id="tab-vote" aria-controls="view-vote" aria-selected="true">Vote</button>
     <button class="tab" role="tab" id="tab-results" aria-controls="view-results" aria-selected="false">
-      <span class="live-dot" aria-hidden="true"></span>Carrera en vivo
+      <span class="live-dot" aria-hidden="true"></span>Live race
     </button>
   </div>
 </nav>
 
 <main class="wrap">
   <div class="banner" id="demoBanner" hidden>
-    <b>Modo de prueba.</b> Firebase aún no está configurado, así que los votos se guardan solo en este navegador.
-    Pega tu configuración en <code>FIREBASE_CONFIG</code> dentro de este archivo para activar la votación compartida.
+    <b>Test mode.</b> Firebase isn't configured yet, so votes are saved only in this browser.
+    Paste your configuration into <code>FIREBASE_CONFIG</code> in this file to enable shared voting.
   </div>
 
-  <!-- ===================== VOTAR ===================== -->
+  <!-- ===================== VOTE ===================== -->
   <section id="view-vote" role="tabpanel" aria-labelledby="tab-vote">
     <div id="voteForm">
-      <h2>Tus datos</h2>
-      <p class="sub">Un voto por persona. Usa tu correo @vw.com.mx:</p>
+      <h2>Your details</h2>
+      <p class="sub">One vote per person. Use your @vw.com.mx email:</p>
       <div class="who">
         <div class="field">
-          <label for="name">Nombre</label>
-          <input id="name" type="text" autocomplete="name" maxlength="100" placeholder="Nombre Completo">
+          <label for="name">Name</label>
+          <input id="name" type="text" autocomplete="name" maxlength="100" placeholder="Full Name">
         </div>
         <div class="field">
-          <label for="email">Correo</label>
-          <input id="email" type="email" autocomplete="email" maxlength="120" placeholder="Correo VW">
+          <label for="email">Email</label>
+          <input id="email" type="email" autocomplete="email" maxlength="120" placeholder="VW Email">
           <small id="domainHint"></small>
         </div>
       </div>
 
       <div class="list-head">
         <div>
-          <h2>Elige tu top 3</h2>
-          <p class="sub" style="margin:0">Marca 1°, 2° y 3° en las tarjetas. Si repites un lugar, se mueve al nuevo equipo. Abre la cinemática para ver el agente completo.</p>
+          <h2>Pick your top 3</h2>
+          <p class="sub" style="margin:0">Mark 1st, 2nd and 3rd on the cards. If you reuse a place, it moves to the new team. Open the cinematic to see the full agent.</p>
         </div>
-        <div class="search"><input id="filter" type="search" placeholder="Buscar equipo o agente" aria-label="Buscar equipo o agente"></div>
+        <div class="search"><input id="filter" type="search" placeholder="Search team or agent" aria-label="Search team or agent"></div>
       </div>
       <div class="teams" id="teams"></div>
-      <div class="none" id="noMatch" hidden>Ningún equipo coincide con tu búsqueda.</div>
+      <div class="none" id="noMatch" hidden>No team matches your search.</div>
     </div>
 
     <div class="thanks" id="thanks" hidden>
       <div class="title-box">
-        <h2 class="rv">Voto registrado</h2>
+        <h2 class="rv">Vote recorded</h2>
         <div class="rail" aria-hidden="true"><i class="rail-line rv"></i><svg class="cycle rider"><use href="#cycle"/></svg></div>
       </div>
-      <p>Este es tu top 3:</p>
+      <p>Here is your top 3:</p>
       <ol class="mypicks" id="mypicks"></ol>
-      <button class="btn" id="goResults" type="button">Ver la carrera en vivo</button>
+      <button class="btn" id="goResults" type="button">View the live race</button>
     </div>
   </section>
 
-  <!-- ===================== RESULTADOS ===================== -->
+  <!-- ===================== RESULTS ===================== -->
   <section id="view-results" role="tabpanel" aria-labelledby="tab-results" hidden>
-    <h2>Carrera en vivo</h2>
-    <p class="sub">Se actualiza solo cuando alguien vota. Cada moto avanza con los puntos de su equipo.</p>
-    <div class="scoring" aria-label="Puntos por lugar">
-      <span class="pt"><b>3</b>1.er lugar</span>
-      <span class="pt p2"><b>2</b>2.º lugar</span>
-      <span class="pt p3"><b>1</b>3.er lugar</span>
+    <h2>Live race</h2>
+    <p class="sub">Updates automatically whenever someone votes. Each bike advances with its team's points.</p>
+    <div class="scoring" aria-label="Points per place">
+      <span class="pt"><b>3</b>1st place</span>
+      <span class="pt p2"><b>2</b>2nd place</span>
+      <span class="pt p3"><b>1</b>3rd place</span>
     </div>
     <div class="totals">
-      <div><b id="totalVoters">0</b><span>votantes</span></div>
-      <div><b id="leaderName">—</b><span>va en primer lugar</span></div>
+      <div><b id="totalVoters">0</b><span>voters</span></div>
+      <div><b id="leaderName">—</b><span>is in first place</span></div>
     </div>
-    <div class="empty-results" id="emptyResults">La pista está vacía. Las motos arrancan con el primer voto.</div>
+    <div class="empty-results" id="emptyResults">The track is empty. The bikes start with the first vote.</div>
     <div class="arena" id="arena">
       <ol class="lanes" id="lanes" aria-hidden="true"></ol>
     </div>
     <ol class="sr-only" id="srRank"></ol>
-    <p class="note">La meta se ajusta con el número de votantes. Desempate: más votos de 1.er lugar, luego orden alfabético.</p>
+    <p class="note">The finish line adjusts to the number of voters. Tiebreaker: most 1st-place votes, then alphabetical order.</p>
   </section>
 </main>
 
@@ -481,12 +481,12 @@
 <div class="submitbar" id="submitbar">
   <div class="wrap">
     <div class="slots" id="picks" aria-live="polite"></div>
-    <button class="send" id="send" disabled>Enviar mi voto</button>
+    <button class="send" id="send" disabled>Submit my vote</button>
     <p class="status" id="status" role="status" aria-live="polite"></p>
   </div>
 </div>
 
-<!-- ===================== CINEMÁTICA ===================== -->
+<!-- ===================== CINEMATIC ===================== -->
 <dialog class="cine" id="cine" aria-labelledby="cineTitle">
   <canvas id="cineCanvas" aria-hidden="true"></canvas>
   <div class="cine-fx" aria-hidden="true"></div>
@@ -495,32 +495,32 @@
     <div class="cine-head">
       <p class="cine-count" id="cineCount"></p>
       <div class="head-right">
-        <button type="button" class="skip-btn" id="skip">Saltar intro</button>
-        <button type="button" class="icon-btn" id="cineClose" aria-label="Cerrar cinemática">
+        <button type="button" class="skip-btn" id="skip">Skip intro</button>
+        <button type="button" class="icon-btn" id="cineClose" aria-label="Close cinematic">
           <svg viewBox="0 0 16 16" aria-hidden="true"><path d="M2 2l12 12M14 2L2 14"/></svg>
         </button>
       </div>
     </div>
     <div class="cine-main" id="cineBody"></div>
     <div class="cine-actions" id="cineActions">
-      <button type="button" class="nav-btn" id="cinePrev">‹ Anterior</button>
-      <div class="cine-vote rank" role="group" aria-label="Mi lugar para este equipo">
-        <span>Mi lugar</span>
-        <button type="button" data-rank="0" aria-pressed="false" aria-label="1° lugar">1°</button>
-        <button type="button" data-rank="1" aria-pressed="false" aria-label="2° lugar">2°</button>
-        <button type="button" data-rank="2" aria-pressed="false" aria-label="3° lugar">3°</button>
+      <button type="button" class="nav-btn" id="cinePrev">‹ Previous</button>
+      <div class="cine-vote rank" role="group" aria-label="My place for this team">
+        <span>My place</span>
+        <button type="button" data-rank="0" aria-pressed="false" aria-label="1st place">1st</button>
+        <button type="button" data-rank="1" aria-pressed="false" aria-label="2nd place">2nd</button>
+        <button type="button" data-rank="2" aria-pressed="false" aria-label="3rd place">3rd</button>
       </div>
-      <button type="button" class="nav-btn" id="cineNext">Siguiente ›</button>
+      <button type="button" class="nav-btn" id="cineNext">Next ›</button>
     </div>
   </div>
 </dialog>
 
 <script type="module">
 /* =====================================================================
-   CONFIGURACIÓN
-   1) Crea un proyecto en Firebase y una base de datos Firestore.
-   2) Pega aquí los datos de tu app web (Configuración del proyecto > Tus apps).
-   3) Publica las reglas del archivo firestore.rules.
+   CONFIGURATION
+   1) Create a Firebase project and a Firestore database.
+   2) Paste your web app details here (Project settings > Your apps).
+   3) Publish the rules from the firestore.rules file.
    ===================================================================== */
 const FIREBASE_CONFIG = {
   apiKey: "AIzaSyAGj0qMZi23xPkVUweBdDDjYJ2SycHCHDc",
@@ -532,12 +532,12 @@ const FIREBASE_CONFIG = {
   measurementId: "G-HNXYYHZNMJ"
 };
 
-// Dominio de correo permitido. Se valida aquí, en el navegador. El correo completo NUNCA se envía a la base de datos:
-// solo se guarda la parte anterior a la @ (por ejemplo, "fatima.hernandez").
+// Allowed email domain. It is validated here, in the browser. The full email is NEVER sent to the database:
+// only the part before the @ is stored (for example, "fatima.hernandez").
 const ALLOWED_DOMAIN = "@vw.com.mx";
 
 /* =====================================================================
-   EQUIPOS Y AGENTES (fuente: Asignacion_Equipos_The_Grid.xlsx)
+   TEAMS AND AGENTS (source: Asignacion_Equipos_The_Grid.xlsx)
    ===================================================================== */
 const TEAMS = [
   { id: "t02", team: "BN Industries", agents: [
@@ -546,14 +546,14 @@ const TEAMS = [
     { name: "Current Supplier Relation", desc: "Current Supplier Relations analysisi and cration of current status for master presentation." }]},
   { id: "t04", team: "KTM Milestone Watch", agents: [
     { name: "Master plan for new programs (RG0-RG7)", desc: "The project aims to optimize the time traditionally allocated to the presentation of critical supplier information, including project timing, industrialization status, sub-supplier management, feasibility assessments, and other relevant topics. In addition, it seeks to enhance data analysis, strengthen action follow-up, and identify continuous improvement opportunities.\nMeetings expected to benefit from the agent's preliminary analysis include:\n- Quality Technical Review (QTR)\n- Program Management Review (PMR)\n- Commitment Review Meetings\n- Weekly Supplier Review Meetings\nThe anticipated outcome is a 40% to 50% reduction in the time required for Priority A part reviews, particularly during the early phases of the project. During the weekly supplier review stage, the primary objective is to improve meeting effectiveness by enabling the agent to proactively identify risk areas and critical topics that require focused discussion and decision-making avoiding timing impacts in the milestones of the project." }]},
-  { id: "t05", team: "BSM - Electrico", agents: [
+  { id: "t05", team: "BSM - Electric", agents: [
     { name: "Extra Support LTM/KTM", desc: "The goal of the project is to automate the request for extraordinary technical support for the purchasing area. In the past, it was done manually. Now the request is done electronically, allowing for more efficient management, and with the records from that management, we can understand what resources we are allocating to that support." }]},
   { id: "t06", team: "Tariffs cockpit", agents: [
     { name: "Tariff reinforcer", desc: "Sponsor: Till von Bothmer.\nTo develop an automated dashboard to report status per Commodity for tariffs as well as an executive view of progress." }]},
   { id: "t07", team: "PKO Value Drivers", agents: [
     { name: "PKO ORION", desc: "Develop an intelligent agent capable of consolidating user-provided information into a centralized knowledge base that can be used to generate Yellow Sheets and Blue Sheets. The agent should also be able to interpret and analyze existing Yellow and Blue Sheets, extract key data, and identify impacted part numbers (NPs), supporting efficient evaluation and decision-making processes." }]},
   { id: "t08", team: "PredictIA: General Purchasing Innovation Team", agents: [
-    { name: "PredictIA", desc: "PredictIA es un agente inteligente diseñado para Compras Generales que analiza históricos de Órdenes de Compra, proveedores, categorías, áreas solicitantes y montos para predecir futuras necesidades de adquisición, identificar patrones recurrentes y anticipar la demanda. A través de modelos predictivos permite detectar oportunidades de consolidación, optimizar estrategias de sourcing y fortalecer las negociaciones con proveedores mediante una mejor visibilidad de volúmenes futuros esperados. Su objetivo es transformar la gestión de compras de un enfoque reactivo a uno predictivo y estratégico, impulsando ahorros, eficiencia operativa y generación de valor para el negocio." }]},
+    { name: "PredictIA", desc: "PredictIA is an intelligent agent designed for General Purchasing that analyzes historical Purchase Orders, suppliers, categories, requesting areas and amounts to predict future procurement needs, identify recurring patterns and anticipate demand. Through predictive models, it helps detect consolidation opportunities, optimize sourcing strategies and strengthen supplier negotiations through better visibility of expected future volumes. Its goal is to transform purchasing management from a reactive approach to a predictive and strategic one, driving savings, operational efficiency and value creation for the business." }]},
   { id: "t26", team: "Buylinguo", agents: [
     { name: "Buylinguo", desc: "" }]},
 { id: "t09", team: "BP team", agents: [
@@ -561,7 +561,7 @@ const TEAMS = [
   { id: "t10", team: "Strategic Sourcing Intelligence Team", agents: [
     { name: "QuoteIQ", desc: "The agent will automatically analyze and standardize quotations from various suppliers and formats, accelerating AEKO and sourcing evaluations. This will streamline the quotation review process and allow buyers to dedicate more time to supplier negotiations and strategic purchasing activities." }]},
   { id: "t11", team: "Steel Price Comparison", agents: [
-    { name: "SteelWise", desc: "Desarrollar un agente de análisis de acero que utilice la información contenida en las hojas amarillas para identificar oportunidades de optimización y ahorro.\n\nEl agente consolidará los grados de acero, especificaciones y requisitos técnicos utilizados por los diferentes proveedores, generando una matriz comparativa que permita identificar materiales comunes entre piezas, plataformas y proveedores.\n\nA partir de esta información, el agente podrá:\n- Comparar los grados de acero utilizados por diferentes proveedores.\n- Mostrar el precio pagado por cada proveedor para materiales similares.\n- Generar promedios y referencias de costo por tipo de acero.\n- Detectar oportunidades de estandarización y consolidación de volúmenes.\n- Identificar diferencias de costo para materiales equivalentes.\n- Comparar la información interna con tendencias de mercado obtenidas de plataformas como Marketlines.\n- Incorporar información de otras regiones, como Alemania, para realizar benchmarks globales y evaluar oportunidades de suministro con molinos alternativos, incluyendo molinos chinos.\n\nEl objetivo final es crear una base de conocimiento que permita tomar decisiones de compra más informadas, aprovechar economías de escala, identificar oportunidades de ahorro y fortalecer la estrategia de abastecimiento de acero a nivel global." }]},
+    { name: "SteelWise", desc: "Develop a steel analysis agent that uses the information contained in the yellow sheets to identify optimization and savings opportunities.\n\nThe agent will consolidate the steel grades, specifications and technical requirements used by the different suppliers, generating a comparison matrix that makes it possible to identify materials common across parts, platforms and suppliers.\n\nBased on this information, the agent will be able to:\n- Compare the steel grades used by different suppliers.\n- Show the price paid to each supplier for similar materials.\n- Generate averages and cost benchmarks per steel type.\n- Detect opportunities to standardize and consolidate volumes.\n- Identify cost differences for equivalent materials.\n- Compare internal information with market trends obtained from platforms such as Marketlines.\n- Incorporate information from other regions, such as Germany, to run global benchmarks and assess sourcing opportunities with alternative mills, including Chinese mills.\n\nThe ultimate goal is to create a knowledge base that enables more informed purchasing decisions, takes advantage of economies of scale, identifies savings opportunities and strengthens the global steel sourcing strategy." }]},
   { id: "t12", team: "Artificially Intelligent - Spongebob, we have the technology.", agents: [
     { name: "Alex Bot", desc: "Negotiation & Presentation Builder" }]},
   { id: "t13", team: "Purchaysing Is In the Line", agents: [
@@ -573,9 +573,9 @@ const TEAMS = [
   { id: "t17", team: "Ctrl + Alt + Procure", agents: [
     { name: "NAR BP Navigator", desc: "Help General Purchasing users anticipate upcoming VW NAR BP processes to improve collaboration, guide discussions with management, and generally stay informed. Automate / schedule push notifications and digest reports.\n\nUses SharePoint Business Plan & Phone Book (Misc.) sources to identify upcoming processes owned by the user and related topics." }]},
   { id: "t18", team: "BN", agents: [
-    { name: "Sourcings Tracker", desc: "Crear un CRM para seguimiento de mis sourcings, desde el kick off hasta la nominación." }]},
+    { name: "Sourcings Tracker", desc: "Create a CRM to track my sourcings, from kick-off to nomination." }]},
   { id: "t19", team: "BN Learning", agents: [
-    { name: "Pregúntale a BN", desc: "Hacer que el conocimiento de compras sea un activo." }]},
+    { name: "Ask BN", desc: "Make purchasing knowledge an asset." }]},
   { id: "t20", team: "Value Engineering Mx", agents: [
     { name: "KONG AGENT", desc: "Optimization Ideas Creation and Implementation Support Assistant Agent" }]},
   { id: "t21", team: "Singularity", agents: [
@@ -589,25 +589,25 @@ const TEAMS = [
 ];
 
 /* =====================================================================
-   UTILIDADES
+   UTILITIES
    ===================================================================== */
 const $ = (s) => document.querySelector(s);
 const esc = (s) => String(s).replace(/[&<>"']/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
 const byId = Object.fromEntries(TEAMS.map((t) => [t.id, t]));
-const ORD = ["1°", "2°", "3°"];
+const ORD = ["1st", "2nd", "3rd"];
 const REDUCED = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 const configured = !String(FIREBASE_CONFIG.apiKey).startsWith("PEGA") && !String(FIREBASE_CONFIG.projectId).startsWith("TU_");
 
 function safeGet(k) { try { return localStorage.getItem(k); } catch { return null; } }
-function safeSet(k, v) { try { localStorage.setItem(k, v); } catch { /* sin almacenamiento */ } }
+function safeSet(k, v) { try { localStorage.setItem(k, v); } catch { /* storage unavailable */ } }
 
-// Separa "usuario@dominio". Devuelve null si no hay exactamente una @.
+// Splits "user@domain". Returns null unless there is exactly one @.
 function splitEmail(email) {
   const parts = email.trim().toLowerCase().split("@");
   return parts.length === 2 ? { user: parts[0], domain: parts[1] } : null;
 }
 
-// El id del voto se calcula solo con el usuario (sin dominio), así el correo completo no se guarda en ningún lado.
+// The vote id is computed from the user part only (no domain), so the full email is never stored anywhere.
 async function hashUser(user) {
   const data = new TextEncoder().encode("the-grid|" + user.trim().toLowerCase());
   const buf = await crypto.subtle.digest("SHA-256", data);
@@ -636,7 +636,7 @@ function setNum(el, to) {
 }
 
 /* =====================================================================
-   ESCENA TRON (canvas): horizonte, torres, piso en perspectiva y motos de luz
+   TRON SCENE (canvas): horizon, towers, perspective floor and light cycles
    ===================================================================== */
 class GridScene {
   constructor(canvas, opts = {}) {
@@ -775,7 +775,7 @@ class GridScene {
   }
 }
 
-/* ---------- Disco de identidad: emblema único por equipo ---------- */
+/* ---------- Identity disc: unique emblem per team ---------- */
 function discSVG(id) {
   const n = parseInt(id.slice(1), 10);
   const r = rng(hashStr(id) + 7);
@@ -796,7 +796,7 @@ function discSVG(id) {
 }
 
 /* =====================================================================
-   BACKEND (Firebase o modo de prueba local)
+   BACKEND (Firebase or local test mode)
    ===================================================================== */
 let backend;
 
@@ -810,8 +810,8 @@ async function initFirebase() {
     async submit({ name, user, picks }) {
       const id = await hashUser(user);
       const batch = fs.writeBatch(db);
-      // "voters" es privado (las reglas impiden leerlo) y solo guarda nombre y usuario, sin dominio de correo.
-      // "votes" solo guarda los lugares elegidos.
+      // "voters" is private (the rules prevent reading it) and only stores name and user, without the email domain.
+      // "votes" only stores the chosen places.
       batch.set(fs.doc(db, "voters", id), { name, usuario: user, createdAt: fs.serverTimestamp() });
       batch.set(fs.doc(db, "votes", id), { picks, createdAt: fs.serverTimestamp() });
       await batch.commit();
@@ -842,16 +842,16 @@ function demoBackend() {
 }
 
 /* =====================================================================
-   TARJETAS DE EQUIPOS
+   TEAM CARDS
    ===================================================================== */
-const picks = [null, null, null]; // ids de equipo para 1°, 2°, 3°
+const picks = [null, null, null]; // team ids for 1st, 2nd, 3rd
 const teamsEl = $("#teams");
 
 function agentHtml(a) {
   const desc = (a.desc || "").trim();
   return `<div class="agent">
-      <p class="agent-name">${esc(a.name || "Nombre por confirmar")}</p>
-      <p class="desc ${desc ? "" : "empty"}">${desc ? esc(desc) : "Descripción pendiente."}</p>
+      <p class="agent-name">${esc(a.name || "Name to be confirmed")}</p>
+      <p class="desc ${desc ? "" : "empty"}">${desc ? esc(desc) : "Description pending."}</p>
     </div>`;
 }
 
@@ -865,12 +865,12 @@ function renderTeams() {
         <h3>${esc(t.team)}</h3>
       </div>
       ${t.agents.map(agentHtml).join("")}
-      <button type="button" class="play" data-play aria-label="Ver cinemática de ${esc(t.team)}">
-        <svg viewBox="0 0 12 12" aria-hidden="true"><path d="M2 1l9 5-9 5z"/></svg>Ver cinemática
+      <button type="button" class="play" data-play aria-label="View cinematic for ${esc(t.team)}">
+        <svg viewBox="0 0 12 12" aria-hidden="true"><path d="M2 1l9 5-9 5z"/></svg>View cinematic
       </button>
-      <div class="rank" role="group" aria-label="Lugar para ${esc(t.team)}">
-        <span>Mi lugar</span>
-        ${ORD.map((o, i) => `<button type="button" data-rank="${i}" aria-pressed="false" aria-label="${o} lugar para ${esc(t.team)}">${o}</button>`).join("")}
+      <div class="rank" role="group" aria-label="Place for ${esc(t.team)}">
+        <span>My place</span>
+        ${ORD.map((o, i) => `<button type="button" data-rank="${i}" aria-pressed="false" aria-label="${o} place for ${esc(t.team)}">${o}</button>`).join("")}
       </div>
     </article>`).join("");
 }
@@ -904,8 +904,8 @@ function syncPicks() {
     });
   });
   $("#picks").innerHTML = picks.map((id, i) => id
-    ? `<button type="button" class="slot on" data-slot="${i}" aria-label="Quitar ${ORD[i]} lugar: ${esc(byId[id].team)}"><b>${ORD[i]}</b><em>${esc(byId[id].team)}</em></button>`
-    : `<div class="slot"><b>${ORD[i]}</b><em>sin elegir</em></div>`).join("");
+    ? `<button type="button" class="slot on" data-slot="${i}" aria-label="Remove ${ORD[i]} place: ${esc(byId[id].team)}"><b>${ORD[i]}</b><em>${esc(byId[id].team)}</em></button>`
+    : `<div class="slot"><b>${ORD[i]}</b><em>not picked</em></div>`).join("");
   updateSend();
   syncCine();
 }
@@ -926,7 +926,7 @@ $("#filter").addEventListener("input", (e) => {
 });
 
 /* =====================================================================
-   CINEMÁTICA POR EQUIPO
+   CINEMATIC PER TEAM
    ===================================================================== */
 const cine = $("#cine");
 let cineIdx = 0, cineScene = null;
@@ -948,8 +948,8 @@ function bodyHtml(t) {
   const long = t.team.length > 24;
   const agents = t.agents.map((a) => {
     const d = (a.desc || "").trim();
-    return `<section class="agent-block"><p class="agent-tag">Agente</p><h3>${esc(a.name || "Nombre por confirmar")}</h3>
-      <div class="desc-body">${d ? descHtml(d) : '<p class="pending" style="--n:0">Descripción pendiente.</p>'}</div></section>`;
+    return `<section class="agent-block"><p class="agent-tag">Agent</p><h3>${esc(a.name || "Name to be confirmed")}</h3>
+      <div class="desc-body">${d ? descHtml(d) : '<p class="pending" style="--n:0">Description pending.</p>'}</div></section>`;
   }).join("");
   return `<div class="cine-copy">
       <div class="title-box">
@@ -965,7 +965,7 @@ function restartAnim(el) { el.style.animation = "none"; void el.offsetWidth; el.
 
 function renderCine(first) {
   const t = TEAMS[cineIdx];
-  $("#cineCount").textContent = `Equipo ${cineIdx + 1} de ${TEAMS.length}`;
+  $("#cineCount").textContent = `Team ${cineIdx + 1} of ${TEAMS.length}`;
   cine.classList.toggle("quick", !first);
   cine.classList.remove("skipped");
   $("#cineBody").innerHTML = bodyHtml(t);
@@ -1015,7 +1015,7 @@ cine.addEventListener("close", () => {
 });
 
 /* =====================================================================
-   HERO Y CONTROL DE ESCENAS (se pausan cuando no se ven)
+   HERO AND SCENE CONTROL (paused when not visible)
    ===================================================================== */
 const hv = { vis: true, dlg: false };
 const heroScene = new GridScene($("#heroCanvas"), { horizon: .6, cycles: 7, motes: 45, seed: 1982, base: .35, maxDpr: 1.25 });
@@ -1029,45 +1029,45 @@ document.addEventListener("visibilitychange", syncScenes);
 syncScenes();
 
 /* =====================================================================
-   ENVÍO DEL VOTO
+   VOTE SUBMISSION
    ===================================================================== */
 const statusEl = $("#status");
 const sendBtn = $("#send");
-const userRe = /^[a-z0-9][a-z0-9._-]{0,63}$/; // parte anterior a la @
+const userRe = /^[a-z0-9][a-z0-9._-]{0,63}$/; // part before the @
 
 function setStatus(msg, isErr) { statusEl.textContent = msg || ""; statusEl.classList.toggle("err", !!isErr); }
 function updateSend() { sendBtn.disabled = picks.some((p) => p === null); }
 
-if (ALLOWED_DOMAIN) $("#domainHint").textContent = `Usa tu correo ${ALLOWED_DOMAIN}`;
+if (ALLOWED_DOMAIN) $("#domainHint").textContent = `Use your ${ALLOWED_DOMAIN} email`;
 
 sendBtn.addEventListener("click", async () => {
   const name = $("#name").value.trim();
   const email = $("#email").value.trim().toLowerCase();
-  if (!name) { setStatus("Escribe tu nombre.", true); $("#name").focus(); return; }
+  if (!name) { setStatus("Enter your name.", true); $("#name").focus(); return; }
   const parts = splitEmail(email);
   if (!parts || !parts.user || !parts.domain) {
-    setStatus(`Escribe tu correo completo, por ejemplo nombre.apellido${ALLOWED_DOMAIN}.`, true); $("#email").focus(); return;
+    setStatus(`Enter your full email, for example first.last${ALLOWED_DOMAIN}.`, true); $("#email").focus(); return;
   }
   if (ALLOWED_DOMAIN && "@" + parts.domain !== ALLOWED_DOMAIN.toLowerCase()) {
-    setStatus(`Solo se aceptan correos ${ALLOWED_DOMAIN}. Usa tu correo de VW, no uno personal.`, true); $("#email").focus(); return;
+    setStatus(`Only ${ALLOWED_DOMAIN} emails are accepted. Use your VW email, not a personal one.`, true); $("#email").focus(); return;
   }
   if (!userRe.test(parts.user)) {
-    setStatus("Tu correo tiene caracteres no válidos antes de la @. Revisa que esté bien escrito.", true); $("#email").focus(); return;
+    setStatus("Your email has invalid characters before the @. Check that it is spelled correctly.", true); $("#email").focus(); return;
   }
-  if (picks.some((p) => p === null)) { setStatus("Elige tu 1°, 2° y 3° lugar.", true); return; }
+  if (picks.some((p) => p === null)) { setStatus("Pick your 1st, 2nd and 3rd place.", true); return; }
 
-  sendBtn.disabled = true; setStatus("Enviando tu voto…");
+  sendBtn.disabled = true; setStatus("Submitting your vote…");
   try {
-    await backend.submit({ name, user: parts.user, picks: [...picks] }); // el correo completo no sale del navegador
+    await backend.submit({ name, user: parts.user, picks: [...picks] }); // the full email never leaves the browser
     $("#email").value = "";
     safeSet("grid_voted", JSON.stringify({ picks: [...picks] }));
     showThanks([...picks]);
   } catch (err) {
     console.error(err);
     if (err && err.code === "permission-denied") {
-      setStatus("No se pudo registrar: este correo ya votó, o las reglas de Firestore no están publicadas.", true);
+      setStatus("Couldn't record your vote: this email has already voted, or the Firestore rules aren't published.", true);
     } else {
-      setStatus("No se pudo enviar tu voto. Revisa tu conexión e inténtalo de nuevo.", true);
+      setStatus("Couldn't submit your vote. Check your connection and try again.", true);
     }
     updateSend();
   }
@@ -1084,7 +1084,7 @@ function showThanks(p) {
 $("#goResults").addEventListener("click", () => selectTab("results"));
 
 /* =====================================================================
-   RESULTADOS EN VIVO · CARRERA DE MOTOS
+   LIVE RESULTS · BIKE RACE
    ===================================================================== */
 const lanesEl = $("#lanes");
 const laneEls = {};
@@ -1097,14 +1097,14 @@ function buildLanes() {
     <li class="lane" data-id="${t.id}" style="--i:${i};--p:0" title="${esc(t.team + " · " + t.agents.map((a) => a.name).filter(Boolean).join(" · "))}">
       <div class="lane-id">
         <span class="lane-pos">${i + 1}</span>
-        <div class="lane-txt"><span class="lane-name">${esc(t.team)}</span><span class="lane-split">1°: 0 · 2°: 0 · 3°: 0</span></div>
+        <div class="lane-txt"><span class="lane-name">${esc(t.team)}</span><span class="lane-split">1st: 0 · 2nd: 0 · 3rd: 0</span></div>
       </div>
       <div class="lane-track">
         <i class="road"></i><i class="trail"></i>
         <div class="bike"><svg class="cycle"><use href="#cycle"/></svg></div>
         <span class="plus"></span>
       </div>
-      <div class="lane-pts"><span class="n">0</span><small>puntos</small></div>
+      <div class="lane-pts"><span class="n">0</span><small>points</small></div>
     </li>`).join("");
   lanesEl.querySelectorAll(".lane").forEach((li) => { laneEls[li.dataset.id] = li; });
 }
@@ -1127,7 +1127,7 @@ function renderResults(allPicks, quiet) {
 
   setNum($("#totalVoters"), voters);
   $("#leaderName").textContent = leader ? leader.team : "—";
-  $("#heroVotes").textContent = voters === 0 ? "Sé el primero en votar" : `${voters} ${voters === 1 ? "voto registrado" : "votos registrados"}`;
+  $("#heroVotes").textContent = voters === 0 ? "Be the first to vote" : `${voters} ${voters === 1 ? "vote recorded" : "votes recorded"}`;
   $("#emptyResults").hidden = voters > 0;
 
   ranked.forEach((r, i) => {
@@ -1137,7 +1137,7 @@ function renderResults(allPicks, quiet) {
     li.style.setProperty("--p", p);
     li.dataset.p = p;
     li.querySelector(".lane-pos").textContent = i + 1;
-    li.querySelector(".lane-split").textContent = `1°: ${r.c[0]} · 2°: ${r.c[1]} · 3°: ${r.c[2]}`;
+    li.querySelector(".lane-split").textContent = `1st: ${r.c[0]} · 2nd: ${r.c[1]} · 3rd: ${r.c[2]}`;
     setNum(li.querySelector(".lane-pts .n"), r.pts);
     li.classList.toggle("r1", r.pts > 0 && i === 0);
     li.classList.toggle("r2", r.pts > 0 && i === 1);
@@ -1153,10 +1153,10 @@ function renderResults(allPicks, quiet) {
     prevPts[r.t.id] = r.pts;
   });
 
-  $("#srRank").innerHTML = ranked.map((r) => `<li>${esc(r.t.team)}: ${r.pts} puntos (1°: ${r.c[0]}, 2°: ${r.c[1]}, 3°: ${r.c[2]})</li>`).join("");
+  $("#srRank").innerHTML = ranked.map((r) => `<li>${esc(r.t.team)}: ${r.pts} points (1st: ${r.c[0]}, 2nd: ${r.c[1]}, 3rd: ${r.c[2]})</li>`).join("");
 
   const leaderId = leader ? leader.id : null;
-  if (!quiet && leaderId && prevLeader && leaderId !== prevLeader) showToast(`Nuevo líder: ${leader.team}`);
+  if (!quiet && leaderId && prevLeader && leaderId !== prevLeader) showToast(`New leader: ${leader.team}`);
   prevLeader = leaderId;
 }
 
@@ -1171,7 +1171,7 @@ function replayRace() {
 }
 
 /* =====================================================================
-   PESTAÑAS
+   TABS
    ===================================================================== */
 function scrollToContent() {
   window.scrollTo({ top: $(".hero").offsetHeight - 1, behavior: REDUCED ? "auto" : "smooth" });
@@ -1192,7 +1192,7 @@ $("#tab-results").addEventListener("click", () => selectTab("results"));
 $("#ctaVote").addEventListener("click", (e) => { e.preventDefault(); selectTab("vote"); });
 
 /* =====================================================================
-   ARRANQUE
+   STARTUP
    ===================================================================== */
 renderTeams();
 buildLanes();
@@ -1206,7 +1206,7 @@ renderResults([], true);
     console.error(err);
     backend = demoBackend();
     $("#demoBanner").hidden = false;
-    $("#demoBanner").innerHTML = "<b>No se pudo conectar con Firebase.</b> Revisa tu configuración. Mientras tanto, los votos se guardan solo en este navegador.";
+    $("#demoBanner").innerHTML = "<b>Couldn't connect to Firebase.</b> Check your configuration. In the meantime, votes are saved only in this browser.";
   }
   if (!configured) $("#demoBanner").hidden = false;
 
@@ -1214,13 +1214,13 @@ renderResults([], true);
   backend.subscribe((all) => { renderResults(all, firstSnap); firstSnap = false; }, (err) => {
     console.error(err);
     $("#emptyResults").hidden = false;
-    $("#emptyResults").textContent = "No se pudieron cargar los resultados. Revisa las reglas de Firestore.";
+    $("#emptyResults").textContent = "Couldn't load the results. Check the Firestore rules.";
   });
 
   const prev = safeGet("grid_voted");
-  if (prev) { try { showThanks(JSON.parse(prev).picks); } catch { /* ignorar */ } }
+  if (prev) { try { showThanks(JSON.parse(prev).picks); } catch { /* ignore */ } }
 })();
-// Mantiene libre el espacio inferior: la barra fija nunca debe tapar la última tarjeta.
+// Keeps the bottom space clear: the fixed bar must never cover the last card.
 (function () {
   const bar = document.getElementById("submitbar");
   if (!bar) return;
